@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Novo Problema</title>
+</head>
+<body>
+
+    <h1>Adicionar Novo Problema</h1>
+
+    <div>
+
+        <p>Título:</p>
+        <input id="title" type="text" placeholder="Ex: Two Sum">
+
+        <p>Categoria:</p>
+        <input id="category" type="text" placeholder="Ex: Strings, Grafos, Programação Dinâmica">
+
+        <p>Dificuldade:</p>
+        <select id="difficulty">
+            <option>Muito Fácil</option>
+            <option>Fácil</option>
+            <option selected>Médio</option>
+            <option>Difícil</option>
+            <option>Muito Difícil</option>
+        </select>
+
+        <p>Enunciado:</p>
+        <textarea id="statement" rows="10" cols="50" placeholder="Descreva o problema aqui..."></textarea>
+
+        <br><br>
+
+        <button onclick="addProblem()">Salvar</button>
+        <a href="index.html">
+            <button>Voltar</button>
+        </a>
+    </div>
+
+    <script src="../static/create.js"></script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Problemas</title>
+</head>
+<body>
+
+    <h1>Lista de Problemas</h1>
+
+    <a href="create.html">Novo Problema</a>
+
+    <div>
+        <h3>Filtros</h3>
+
+        <input id="search" type="text" placeholder="Buscar por título">
+
+        <select id="category">
+            <option>Todas as categorias</option>
+            <option>Strings</option>
+            <option>Grafos</option>
+            <option>Programação Dinâmica</option>
+        </select>
+
+        <select id="difficulty">
+            <option>Todas as dificuldades</option>
+            <option>Muito Fácil</option>
+            <option>Fácil</option>
+            <option>Médio</option>
+            <option>Difícil</option>
+            <option>Muito Difícil</option>
+        </select>
+
+        <button onclick="applyFilters()">Filtrar</button>
+    </div>
+
+    <hr>
+
+    <div id="problem-list"></div>
+
+    <script src="../static/script.js"></script>
+</body>
+</html>
