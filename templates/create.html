@@ -1,40 +1,83 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
-    <title>Novo Problema</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Problema</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        input, select, textarea, button {
+            width: 100%;
+            max-width: 500px;
+            margin: 5px 0;
+            padding: 8px;
+        }
+    </style>
 </head>
+
 <body>
 
-    <h1>Adicionar Novo Problema</h1>
+<h1>
+    {% if problem %}
+        Editar Problema
+    {% else %}
+        Novo Problema
+    {% endif %}
+</h1>
 
-    <div>
+<form
+    {% if problem %}
+        hx-put="/updateProblem"
+    {% else %}
+        hx-post="/createProblem"
+    {% endif %}
+    hx-target="#mensagem"
+>
 
-        <p>Título:</p>
-        <input id="title" type="text" placeholder="Ex: Two Sum">
+    {% if problem %}
+        <input type="hidden" name="id" value="{{ problem.id }}">
+    {% endif %}
 
-        <p>Categoria:</p>
-        <input id="category" type="text" placeholder="Ex: Strings, Grafos, Programação Dinâmica">
+    <p>Título:</p>
+    <input name="title" type="text" value="{{ problem.title if problem else '' }}" required>
 
-        <p>Dificuldade:</p>
-        <select id="difficulty">
-            <option>Muito Fácil</option>
-            <option>Fácil</option>
-            <option selected>Médio</option>
-            <option>Difícil</option>
-            <option>Muito Difícil</option>
-        </select>
+    <p>Categoria:</p>
+    <input name="category_name" type="text" value="{{ problem.category.name if problem else '' }}" required>
 
-        <p>Enunciado:</p>
-        <textarea id="statement" rows="10" cols="50" placeholder="Descreva o problema aqui..."></textarea>
+    <p>Dificuldade:</p>
+    <select name="difficulty">
+        <option {% if problem and problem.difficulty == "Muito Fácil" %}selected{% endif %}>Muito Fácil</option>
+        <option {% if problem and problem.difficulty == "Fácil" %}selected{% endif %}>Fácil</option>
+        <option {% if not problem or problem.difficulty == "Médio" %}selected{% endif %}>Médio</option>
+        <option {% if problem and problem.difficulty == "Difícil" %}selected{% endif %}>Difícil</option>
+        <option {% if problem and problem.difficulty == "Muito Difícil" %}selected{% endif %}>Muito Difícil</option>
+    </select>
 
-        <br><br>
+    <p>Enunciado:</p>
+    <textarea name="statement" rows="10" required>{{ problem.statement if problem else '' }}</textarea>
 
-        <button onclick="addProblem()">Salvar</button>
-        <a href="index.html">
-            <button>Voltar</button>
-        </a>
-    </div>
+    <br>
 
-    <script src="../static/create.js"></script>
+    <button type="submit">Salvar</button>
+</form>
+
+<br>
+
+<div id="mensagem"></div>
+
+<br>
+
+<a href="/">
+    <button>Voltar</button>
+</a>
+
 </body>
 </html>

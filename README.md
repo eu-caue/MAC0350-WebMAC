@@ -14,30 +14,28 @@ O objetivo do projeto é aplicar os conceitos estudados na disciplina de desenvo
 
 ## Funcionalidades
 
-A aplicação permitirá ao usuário:
+A aplicação permite ao usuário:
 
 * cadastrar novos problemas
 * organizar problemas por categorias
 * definir níveis de dificuldade
 * visualizar a lista de problemas cadastrados
-* filtrar problemas por categoria ou dificuldade
+* filtrar problemas por título, categoria ou dificuldade
 * atualizar informações de um problema
 * remover problemas do banco de dados
 
-Essas operações serão implementadas utilizando **HTMX**, permitindo atualizar partes da interface sem recarregar toda a página.
+Essas operações são implementadas utilizando **HTMX**, permitindo atualizar partes da interface sem recarregar toda a página.
 
 ---
 
 ## Tecnologias Utilizadas
 
-O projeto utilizará as seguintes tecnologias:
+O projeto utiliza as seguintes tecnologias:
 
 * **HTML**
-* **CSS**
-* **JavaScript**
 * **FastAPI** para o backend da aplicação
 * **HTMX** para comunicação dinâmica entre frontend e backend
-* **SQL** para persistência de dados
+* **SQLModel (SQLite)** para persistência de dados
 
 ---
 
@@ -74,9 +72,7 @@ Cada problema possui as seguintes informações:
 
 A relação entre os modelos é:
 
-```
-Categoria (1) → (N) Problemas
-```
+Categoria (1) -> (N) Problemas
 
 Ou seja, uma categoria pode possuir vários problemas, mas cada problema pertence a apenas uma categoria.
 
@@ -84,27 +80,26 @@ Ou seja, uma categoria pode possuir vários problemas, mas cada problema pertenc
 
 ## Telas da Aplicação
 
-A aplicação possui pelo menos duas interfaces principais.
+A aplicação possui duas interfaces principais.
 
 ### Lista de Problemas
 
 Tela responsável por exibir todos os problemas cadastrados.
 
-Nela o usuário poderá:
+Nela o usuário pode:
 
 * visualizar problemas
-* aplicar filtros por categoria
-* filtrar por dificuldade
-* atualizar informações de um problema
+* aplicar filtros por título, categoria e dificuldade
+* editar problemas existentes
 * remover problemas do sistema
 
 ---
 
-### Cadastro de Problemas
+### Cadastro/Edição de Problemas
 
-Interface utilizada para adicionar novos problemas ao sistema.
+Interface utilizada tanto para adicionar novos problemas quanto para editar problemas existentes.
 
-O usuário poderá informar:
+O usuário pode informar:
 
 * título
 * categoria
@@ -113,15 +108,9 @@ O usuário poderá informar:
 
 ---
 
-### Gerenciamento de Categorias
-
-O sistema também permitirá criar novas categorias, que poderão ser utilizadas na organização dos problemas.
-
----
-
 ## Operações CRUD
 
-As operações básicas sobre os dados serão implementadas utilizando **HTMX**.
+As operações básicas sobre os dados são implementadas utilizando **HTMX**.
 
 As principais operações incluem:
 
@@ -141,7 +130,25 @@ Essas operações correspondem aos métodos HTTP padrão:
 
 ## Interface Responsiva
 
-As interfaces da aplicação serão desenvolvidas de forma responsiva, permitindo o uso tanto em **computadores** quanto em **dispositivos móveis**.
+A interface da aplicação foi desenvolvida para funcionar tanto em **computadores** quanto em **dispositivos móveis**.
+
+---
+
+## Uso de Inteligência Artificial
+
+Durante o desenvolvimento do projeto, ferramentas de IA foram utilizadas de forma pontual como apoio.
+
+No frontend, foi criado um template inicial em HTML manualmente, e ferramentas de IA foram utilizadas para:
+
+* auxiliar na integração com HTMX
+* ajustar o comportamento dinâmico da interface
+* melhorar a responsividade para dispositivos móveis
+* resolver detalhes específicos de implementação
+
+No backend, o desenvolvimento foi baseado majoritariamente no conteúdo apresentado em aula (FastAPI e SQLModel). O uso de IA foi restrito a:
+
+* esclarecimento de dúvidas pontuais
+* auxílio na depuração de erros específicos
 
 ---
 
@@ -149,7 +156,7 @@ As interfaces da aplicação serão desenvolvidas de forma responsiva, permitind
 
 Algumas funcionalidades que poderiam ser adicionadas em versões futuras incluem:
 
-* criação de **listas de exercícios (problem sets)** compostas por múltiplos problemas
+* criação de listas de exercícios (problem sets) compostas por múltiplos problemas
 * possibilidade de um mesmo problema aparecer em diferentes listas
 * exportação de listas de exercícios
 * suporte a formatação em Markdown para enunciados
@@ -161,7 +168,25 @@ Algumas funcionalidades que poderiam ser adicionadas em versões futuras incluem
 
 Este projeto foi desenvolvido como parte de uma atividade individual da disciplina MAC0350 - Introdução ao Desenvolvimento de Sistemas de Software, com o objetivo de aplicar na prática os conceitos apresentados em WebMAC.
 
+---
+
+## Como Executar
+
+1. Instale as dependências:
+
+pip install -r requirements.txt
+
+2. Execute o servidor:
+
+uvicorn main:app --reload
+
+3. Acesse no navegador:
+
+http://127.0.0.1:8000
+
+---
+
 ## Autor
 
-**Cauê Fornielles da Costa**
+Cauê Fornielles da Costa  
 NUSP: 14564489
