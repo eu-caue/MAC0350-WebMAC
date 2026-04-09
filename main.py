@@ -60,6 +60,9 @@ app = FastAPI(lifespan=initFunction)
 # Sintaxe recomendada: diretório como primeiro argumento posicional
 templates = Jinja2Templates(directory="templates")
 
+# Monta a pasta "static" na rota "/static"
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
 @app.get("/", response_class=HTMLResponse)
 def index(request: Request, nome: Optional[str] = None, categoria: Optional[str] = None, dificuldade: Optional[str] = None):
     with Session(engine) as session:

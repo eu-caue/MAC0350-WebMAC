@@ -3,109 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Problemas</title>
 
     <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.js"></script>
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-
-        input, select, button {
-            width: 100%;
-            max-width: 400px;
-            margin: 5px 0;
-            padding: 8px;
-        }
-
-        .problem {
-            margin-bottom: 20px;
-        }
-    </style>
+    <link rel="stylesheet" href="/static/index.css">
 </head>
 
 <body>
 
-<h1>Lista de Problemas</h1>
+<div class="container">
 
-<a href="/create">Novo Problema</a>
+    <h1>Lista de Problemas</h1>
 
-<hr>
+    <div class="top-bar">
+        <span></span>
+        <a href="/create">
+            <button class="button-primary">Novo Problema</button>
+        </a>
+    </div>
 
-<form 
-    hx-get="/" 
-    hx-target="#problem-list"
-    hx-select="#problem-list">
+    <form 
+        hx-get="/" 
+        hx-target="#problem-list"
+        hx-select="#problem-list">
 
-    <h3>Filtros</h3>
+        <h3>Filtros</h3>
 
-    <input 
-        type="text" 
-        name="nome"
-        value="{{ nome or '' }}"
-        placeholder="Buscar por título">
+        <input 
+            type="text" 
+            name="nome"
+            value="{{ nome or '' }}"
+            placeholder="Buscar por título">
 
-    <select name="categoria">
-        <option value="">Todas as categorias</option>
-        {% for cat in categories %}
-            <option value="{{ cat.name }}"
-                {% if categoria == cat.name %}selected{% endif %}>
-                {{ cat.name }}
-            </option>
+        <select name="categoria">
+            <option value="">Todas as categorias</option>
+            {% for cat in categories %}
+                <option value="{{ cat.name }}"
+                    {% if categoria == cat.name %}selected{% endif %}>
+                    {{ cat.name }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <select name="dificuldade">
+            <option value="">Todas as dificuldades</option>
+            {% for d in ["Muito Fácil", "Fácil", "Médio", "Difícil", "Muito Difícil"] %}
+                <option {% if dificuldade == d %}selected{% endif %}>
+                    {{ d }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <button type="submit" class="button-primary">Filtrar</button>
+    </form>
+
+    <div id="problem-list">
+
+        {% for problem in problems %}
+
+            <div class="problem">
+                <h3>{{ problem.title }}</h3>
+                <p><strong>Categoria:</strong> {{ problem.category.name }}</p>
+                <p><strong>Dificuldade:</strong> {{ problem.difficulty }}</p>
+
+                <details>
+                    <summary>Ver enunciado</summary>
+                    <p>{{ problem.statement }}</p>
+                </details>
+
+                <div class="problem-buttons">
+                    <a href="/create/{{ problem.id }}">
+                        <button class="button-edit">Editar</button>
+                    </a>
+
+                    <button 
+                        class="button-delete"
+                        hx-delete="/deleteProblem?id={{ problem.id }}"
+                        hx-confirm="Tem certeza que deseja remover '{{ problem.title | e }}'?"
+                        hx-target="#problem-list"
+                        hx-select="#problem-list"
+                        hx-include="form">
+                        Remover
+                    </button>
+                </div>
+            </div>
+
+        {% else %}
+            <p>Nenhum problema encontrado</p>
         {% endfor %}
-    </select>
 
-    <select name="dificuldade">
-        <option value="">Todas as dificuldades</option>
-        {% for d in ["Muito Fácil", "Fácil", "Médio", "Difícil", "Muito Difícil"] %}
-            <option {% if dificuldade == d %}selected{% endif %}>
-                {{ d }}
-            </option>
-        {% endfor %}
-    </select>
-
-    <button type="submit">Filtrar</button>
-</form>
-
-<hr>
-
-<div id="problem-list">
-
-    {% for problem in problems %}
-
-        <div class="problem">
-            <h3>{{ problem.title }}</h3>
-            <p><strong>Categoria:</strong> {{ problem.category.name }}</p>
-            <p><strong>Dificuldade:</strong> {{ problem.difficulty }}</p>
-
-            <details>
-                <summary>Enunciado</summary>
-                <p>{{ problem.statement }}</p>
-            </details>
-
-            <a href="/create/{{ problem.id }}">
-                <button>Editar</button>
-            </a>
-
-
-            <button 
-                hx-delete="/deleteProblem?id={{ problem.id }}"
-                hx-confirm="Tem certeza que deseja remover '{{ problem.title | e }}'?"
-                hx-target="#problem-list"
-                hx-select="#problem-list"
-                hx-include="form">
-                Remover
-            </button>
-        </div>
-
-        <hr>
-
-    {% else %}
-        <p>Nenhum problema encontrado</p>
-    {% endfor %}
+    </div>
 
 </div>
 

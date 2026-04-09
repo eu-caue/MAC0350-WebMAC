@@ -3,27 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Problema</title>
+    <title>Criar Problema</title>
 
     <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.js"></script>
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-
-        input, select, textarea, button {
-            width: 100%;
-            max-width: 500px;
-            margin: 5px 0;
-            padding: 8px;
-        }
-    </style>
+    <link rel="stylesheet" href="/static/create.css">
 </head>
 
 <body>
+
+<div class="container">
 
 <h1>
     {% if problem %}
@@ -46,13 +34,13 @@
         <input type="hidden" name="id" value="{{ problem.id }}">
     {% endif %}
 
-    <p>Título:</p>
+    <label>Título:</label>
     <input name="title" type="text" value="{{ problem.title if problem else '' }}" required>
 
-    <p>Categoria:</p>
+    <label>Categoria:</label>
     <input name="category_name" type="text" value="{{ problem.category.name if problem else '' }}" required>
 
-    <p>Dificuldade:</p>
+    <label>Dificuldade:</label>
     <select name="difficulty">
         <option {% if problem and problem.difficulty == "Muito Fácil" %}selected{% endif %}>Muito Fácil</option>
         <option {% if problem and problem.difficulty == "Fácil" %}selected{% endif %}>Fácil</option>
@@ -61,23 +49,21 @@
         <option {% if problem and problem.difficulty == "Muito Difícil" %}selected{% endif %}>Muito Difícil</option>
     </select>
 
-    <p>Enunciado:</p>
+    <label>Enunciado:</label>
     <textarea name="statement" rows="10" required>{{ problem.statement if problem else '' }}</textarea>
 
-    <br>
-
-    <button type="submit">Salvar</button>
+    <button type="submit" class="button-primary">Salvar</button>
 </form>
-
-<br>
 
 <div id="mensagem"></div>
 
 <br>
 
 <a href="/">
-    <button>Voltar</button>
+    <button class="button-secondary">Voltar</button>
 </a>
+
+</div>
 
 </body>
 </html>
